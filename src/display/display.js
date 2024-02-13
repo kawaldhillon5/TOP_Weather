@@ -17,6 +17,7 @@ const displayCurrent = function(contentDiv, input, unit){
     
     contentDiv.appendChild(displayLocationInfo(input));
     contentDiv.appendChild(displayWeatherInfo(input,unit));
+    displayhourlyForecast(input);
 }
 
 const displayLocationInfo = function(input){
@@ -105,6 +106,52 @@ const displayWeatherInfo = function(input,unit){
     weatherInfoDiv.appendChild(bottomDiv);
 
     return weatherInfoDiv;
+}
+
+const displayhourlyForecast = function(input){
+
+    const hourlyForecastDiv = createElementDom("div","id","hourly_div");
+
+    const date = new Date();
+    // const currentHour = date.getHours();
+    const currentHour = 22;
+    console.log(currentHour);
+    let arrDayCurrent = input.forecast.forecastday[0].hour;
+    let arrDayNext = input.forecast.forecastday[1].hour;
+    let j = Number(currentHour);
+    let k = Number(currentHour);
+
+    let hh, ap;
+
+    for(let i = 0; i < 6; i++){
+        if(j >= 24){j = 0;}
+        if(j === 0) {hh = 12; ap = "a.m"}
+        else if(j === 24){hh = j -12; ap = "a.m"} 
+        else if(j > 12){hh = j-12; ap = "p.m"}
+        else if(j === 12){hh = j; ap = "p.m"}
+        else if(j < 12){hh = j, ap = "a.m"};
+
+        if(k <= 23) {
+            const condition = arrDayCurrent[k].condition.text;
+            const temp = arrDayCurrent[k].temp_c;
+            console.log(`${hh} ${ap} ${condition} ${temp} j = ${j} k = ${k}`);
+        } else if ( k > 23 ){
+            let c = k - 24;
+            const condition = arrDayNext[c].condition.text;
+            const temp = arrDayNext[c].temp_c;
+            console.log(`${hh} ${ap} ${condition} ${temp} j = ${j} k = ${k}`);
+        }
+
+        j = ++j;
+        k = ++k;
+        // const hourDiv = createElementDom("div","id",`${i}_hour_div`);
+        // const conditionDiv = createElementDom("div","class","hour_condition");
+        // const tempDiv = createElementDom("div","class","hour_temp");
+        // const timeDiv = createElementDom("div","class","hour_time");
+
+    }
+
+    return hourlyForecastDiv;
 }
 
 export  {displayData, displayErr}
