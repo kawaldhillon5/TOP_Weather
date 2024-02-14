@@ -2,9 +2,10 @@ import {searchCity, searchDefault, searchSuggestion} from "../search/search";
 import "./index.css"
 
 const run = function(){
+    document.getElementById("loader").style.display = "none";
     let unitToggle = true;
     searchDefault(unitToggle);
-    searchSuggestion();
+    searchSuggestion(unitToggle);
     const searchBtn = document.querySelector("#search_btn");
     searchBtn.addEventListener("click", () => {
         const searchIn = document.querySelector("#search_in");

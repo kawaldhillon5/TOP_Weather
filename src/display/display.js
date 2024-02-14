@@ -9,8 +9,11 @@ const displayData = function(input,unit){
 }
 
 const displayErr = function(input){
-    const errDiv = document.querySelector(".content_data");
-    errDiv.textContent = input;
+    const contentDiv = document.querySelector(".content_data");
+    const errDiv = createElementDom("div","id","error_div")
+    errDiv.textContent = "Invalid Input";
+    contentDiv.textContent = "";
+    contentDiv.appendChild(errDiv);
 }
 
 const displayCurrent = function(contentDiv, input, unit){
