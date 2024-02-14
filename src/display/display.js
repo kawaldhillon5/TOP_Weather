@@ -17,7 +17,7 @@ const displayCurrent = function(contentDiv, input, unit){
     
     contentDiv.appendChild(displayLocationInfo(input));
     contentDiv.appendChild(displayWeatherInfo(input,unit));
-    displayhourlyForecast(input);
+    contentDiv.appendChild(displayhourlyForecast(input,unit));
 }
 
 const displayLocationInfo = function(input){
@@ -108,13 +108,12 @@ const displayWeatherInfo = function(input,unit){
     return weatherInfoDiv;
 }
 
-const displayhourlyForecast = function(input){
+const displayhourlyForecast = function(input, unit){
 
     const hourlyForecastDiv = createElementDom("div","id","hourly_div");
 
     const date = new Date();
-    // const currentHour = date.getHours();
-    const currentHour = 22;
+    const currentHour = date.getHours();
     console.log(currentHour);
     let arrDayCurrent = input.forecast.forecastday[0].hour;
     let arrDayNext = input.forecast.forecastday[1].hour;
@@ -131,23 +130,45 @@ const displayhourlyForecast = function(input){
         else if(j === 12){hh = j; ap = "p.m"}
         else if(j < 12){hh = j, ap = "a.m"};
 
+        const hourDiv = createElementDom("div","id",`${i}_hour_div`);
+        hourDiv.classList.add("hour_div");
+        const conditionDiv = createElementDom("div","class","hour_condition");
+        const tempDiv = createElementDom("div","class","hour_temp");
+        const timeDiv = createElementDom("div","class","hour_time");
+
         if(k <= 23) {
             const condition = arrDayCurrent[k].condition.text;
             const temp = arrDayCurrent[k].temp_c;
             console.log(`${hh} ${ap} ${condition} ${temp} j = ${j} k = ${k}`);
+            conditionDiv.textContent = condition;
+            timeDiv.textContent = `${hh} ${ap}`;
+            if(unit){
+                tempDiv.textContent = `${arrDayCurrent[k].temp_c} C`; 
+            } else {
+                tempDiv.textContent = `${arrDayCurrent[k].temp_f} F`; 
+            }
         } else if ( k > 23 ){
             let c = k - 24;
             const condition = arrDayNext[c].condition.text;
             const temp = arrDayNext[c].temp_c;
             console.log(`${hh} ${ap} ${condition} ${temp} j = ${j} k = ${k}`);
+            conditionDiv.textContent = condition;
+            timeDiv.textContent = `${hh} ${ap}`;
+            if(unit){
+                tempDiv.textContent = `${arrDayCurrent[c].temp_c} C`; 
+            } else {
+                tempDiv.textContent = `${arrDayCurrent[c].temp_f} F`; 
+            }
         }
 
         j = ++j;
         k = ++k;
-        // const hourDiv = createElementDom("div","id",`${i}_hour_div`);
-        // const conditionDiv = createElementDom("div","class","hour_condition");
-        // const tempDiv = createElementDom("div","class","hour_temp");
-        // const timeDiv = createElementDom("div","class","hour_time");
+
+        hourDiv.appendChild(timeDiv);
+        hourDiv.appendChild(conditionDiv);
+        hourDiv.appendChild(tempDiv);
+
+        hourlyForecastDiv.appendChild(hourDiv);
 
     }
 
