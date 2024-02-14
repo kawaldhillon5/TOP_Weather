@@ -1,4 +1,53 @@
 import {displayData , displayErr} from "../display/display"
+import { createElementDom } from "../extra-functions/functions";
+
+const searchSuggestion = function(unit) {
+
+    const searchIn = document.querySelector("#search_in");
+    searchIn.addEventListener("input", () =>{
+        let sucessfull = false;
+        fetch(`http://api.weatherapi.com/v1/search.json?key=44452755b5a14a59aa3221559241002&q=${searchIn.value}`, {mode: 'cors'})
+        .then(function(response) {
+            if(response.ok){
+                sucessfull = true;
+            } else {
+                sucessfull = false;
+            }
+            return response.json();
+        })
+        .then(function(response) {
+            if(sucessfull){
+            console.log(response);
+            searchSugDisplay(response, unit);
+            } else {
+            console.log(response.error.message);
+            }
+        })
+    });
+
+}
+
+const searchSugDisplay = function(input, unit) {
+
+    const suggestionDiv = document.querySelector("#search_extra");
+    suggestionDiv.textContent = "";
+    input.forEach(element => {
+        const sugesDiv = createElementDom("div","class","search_sugestion");
+        sugesDiv.textContent = `${element.name}, ${element.region}, ${element.country}`;
+        sugesDiv.addEventListener("click", () => {
+            const searchIn = document.querySelector("#search_in");
+            searchIn.value = `${element.name}, ${element.country}`;
+            searchCity(`${element.name}, ${element.country}`, unit);
+            suggestionDiv.textContent = "";
+            suggestionDiv.classList.remove("active");
+            suggestionDiv.classList.add("non-active");
+        });
+        suggestionDiv.classList.remove("non-active");
+        suggestionDiv.classList.add("active");
+        suggestionDiv.appendChild(sugesDiv);
+    });
+
+}
 
 const searchCity = function(input, unit){
     let sucessfull = false;
@@ -28,4 +77,5 @@ const searchDefault = function(unit){
 }
 
 
-export  {searchCity, searchDefault};
+
+export  {searchCity, searchDefault, searchSuggestion};

@@ -249,3 +249,27 @@ a{
 .hour_div > .hour_condition {
     font-size: 20px;
 }
+
+#search_in {
+    position: relative;
+}
+
+#search_div > .active {
+    z-index: 100;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    padding: 5px;
+}
+
+#search_Div > .non-active{
+    display: none;
+}
+
+.search_sugestion:hover {
+    background-color: antiquewhite;
+    cursor: pointer;
+}
+
+

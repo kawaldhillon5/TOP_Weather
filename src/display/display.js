@@ -22,9 +22,8 @@ const displayCurrent = function(contentDiv, input, unit){
 
 const displayLocationInfo = function(input){
 
-    const date = new Date();
+    let date = new Date();
     console.log(date);
-
     const locationInfoDiv = createElementDom("div","id","city_info");
     const cityName = createElementDom("div","id", "city_name");
     cityName.setAttribute("class","location_info_item");
@@ -37,8 +36,9 @@ const displayLocationInfo = function(input){
 
     cityName.textContent = input.location.name;
     country.textContent = input.location.country;
-    currentDay.textContent = format(date, 'yyyy-MM-dd');
-    currentTime.textContent = date.toLocaleTimeString();
+    // currentDay.textContent = format(date, 'yyyy-MM-dd');
+    currentDay.textContent = date.toLocaleDateString("en-US",{timeZone: input.location.tz_id});
+    currentTime.textContent = date.toLocaleTimeString("en-US",{timeZone: input.location.tz_id});
 
     locationInfoDiv.appendChild(cityName);
     locationInfoDiv.appendChild(country);
