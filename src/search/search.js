@@ -11,24 +11,28 @@ const searchSuggestion = function(unit) {
             if(response.ok){
                 sucessfull = true;
             } else {
-                sucessfull = false;
+                    sucessfull = false;
             }
             return response.json();
         })
         .then(function(response) {
             if(sucessfull){
-            console.log(response);
-            searchSugDisplay(response, unit);
+                if(response.length == "0"){
+                    document.getElementById("search_extra").style.display = "none";
+                } else {
+                    searchSugDisplay(response, unit);
+                }
+                console.log(response);
             } else {
-            console.log(response.error.message);
+                document.getElementById("search_extra").style.display = "none";
+                console.log(response.error.message);
             }
-        })
+        });
     });
-
 }
 
 const searchSugDisplay = function(input, unit) {
-
+    document.getElementById("search_extra").style.display = "flex";
     const suggestionDiv = document.querySelector("#search_extra");
     suggestionDiv.textContent = "";
     input.forEach(element => {
@@ -53,6 +57,8 @@ const searchCity = function(input, unit){
     let sucessfull = false;
     fetch(`https://api.weatherapi.com/v1/forecast.json?key=44452755b5a14a59aa3221559241002&q=${input}&days=3`, {mode: 'cors'})
     .then(function(response) {
+        document.querySelector(".content_data").style.filter = "blur(3px)";
+        document.getElementById("loader").style.display = "block";
         if(response.ok){
             sucessfull = true;
         } else {

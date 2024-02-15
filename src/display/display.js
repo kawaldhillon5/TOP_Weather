@@ -1,5 +1,4 @@
 import { createElementDom, insertHtml } from "../extra-functions/functions";
-import { format } from "date-fns";
 
 const displayData = function(input,unit){
 
@@ -13,11 +12,21 @@ const displayErr = function(input){
     const errDiv = createElementDom("div","id","error_div")
     errDiv.textContent = "Invalid Input";
     contentDiv.textContent = "";
+    document.getElementById("loader").style.display = "none";
+    document.querySelector(".content_data").style.filter = "blur(0px)";
     contentDiv.appendChild(errDiv);
 }
 
 const displayCurrent = function(contentDiv, input, unit){
     
+    const isDay = input.current.is_day;
+    if(isDay == "1"){
+        document.querySelector(".content_data").classList.add("day");
+        document.querySelector(".content_data").classList.remove("night");
+    } else if (isDay == "0"){
+        document.querySelector(".content_data").classList.add("night");
+        document.querySelector(".content_data").classList.remove("day");
+    }
     contentDiv.appendChild(displayLocationInfo(input));
     contentDiv.appendChild(displayWeatherInfo(input,unit));
     contentDiv.appendChild(displayhourlyForecast(input,unit));
@@ -114,9 +123,10 @@ const displayWeatherInfo = function(input,unit){
 const displayhourlyForecast = function(input, unit){
 
     const hourlyForecastDiv = createElementDom("div","id","hourly_div");
-
-    const date = new Date();
-    const currentHour = date.getHours();
+    let currentHour = input.location.localtime.slice(11,13);
+    if(currentHour[1] == ":"){
+        currentHour = `0${currentHour[0]}`;
+    }
     console.log(currentHour);
     let arrDayCurrent = input.forecast.forecastday[0].hour;
     let arrDayNext = input.forecast.forecastday[1].hour;
@@ -170,6 +180,9 @@ const displayhourlyForecast = function(input, unit){
         hourDiv.appendChild(timeDiv);
         hourDiv.appendChild(conditionDiv);
         hourDiv.appendChild(tempDiv);
+
+        document.getElementById("loader").style.display = "none";
+        document.querySelector(".content_data").style.filter = "blur(0px)";
 
         hourlyForecastDiv.appendChild(hourDiv);
 

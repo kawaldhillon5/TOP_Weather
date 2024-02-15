@@ -1,3 +1,8 @@
+@font-face {
+    font-family: myFont;
+    src: url(../assets/Roboto-Regular.ttf);
+}
+
 html,body{
     margin: 0;
     padding: 0;
@@ -9,6 +14,8 @@ body{
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
+    background-color: #3fa8fd;
+    font-family: myFont;
 }
 
 #footer {
@@ -55,6 +62,10 @@ a{
     -webkit-transition: .4s;
     transition: .4s;
 }
+
+.slider:hover {
+    transform: scale(1.1,1.1);
+}
   
   .slider:before {
     position: absolute;
@@ -100,12 +111,19 @@ a{
     justify-content: left;
     gap: 20px;
     align-items: center;
+    justify-content: space-between;
+}
+
+.search_form{
+    flex: 1;
+    display: flex;
 }
 
 .search_form > form{
-
+    flex: 1;
     display: flex;
     gap: 10px;
+    justify-content: center;
 
 }
 
@@ -114,13 +132,11 @@ a{
     gap: 5px;
     align-items: center;
     margin-right: 20px;
-    margin-left: auto;
 }
 
 .header {
     
     margin-left: 20px;
-    margin-right: auto;
 }
 
 .content_data{
@@ -131,21 +147,35 @@ a{
     grid-template-columns: 1fr 2fr;
     grid-template-rows: 1.5fr 1fr;
     justify-items: stretch;
-    align-items: center;
+    align-items: stretch;
     gap: 20px;
     margin: 20px;
     border: 1px #2196F3 solid;
+    border-radius: 15px;
+    backdrop-filter: 5px;
+    transition: all 200ms ease-in-out;
 }
 
-#city_info,#weather_info{
-    padding: 2px;
-    border: 1px #00b859 solid;
+.day {
+    background-color: #2196F3;
+}
+
+.night{
+    background-color: #0c253d;
+}
+
+#city_info,#weather_info, .hour_div{
+    padding: 5px;
+    border: 1px #1897ff;
+    background-color: #3fa8fd;
+    border-radius: 15px;
 }
 
 #city_info{
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
 }
 
 .location_info_item{
@@ -231,15 +261,12 @@ a{
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    gap: 40px;
-    border: 1px solid rgb(129, 167, 47);
+    gap: 20px;
 
 }
 
 .hour_div {
     flex: 1;
-    padding: 30px;
-    border: 1px solid red;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -255,12 +282,15 @@ a{
 }
 
 #search_div > .active {
+    transform: translate(10px,36px);
     z-index: 100;
     position: absolute;
     display: flex;
     flex-direction: column;
     background-color: white;
     padding: 5px;
+    border: 1px solid black;
+    border-radius: 5px;
 }
 
 #search_Div > .non-active{
@@ -304,3 +334,33 @@ a{
     z-index: 1;
     font-size: 34px;
   }
+
+#search_div{
+    flex: 1;
+    display: flex;
+    max-width: 50vh;
+    flex-direction: column;
+
+}
+
+#search_in {
+    flex: 1;
+    border: 1px solid #3fb9fb;
+    border-radius: 12px;
+    height: 35px;
+    padding: 10px;
+}
+
+#search_btn {
+    border: 1px solid #3fb9fb;
+    border-radius: 12px;
+    background-color: #deedff;
+    cursor: pointer;
+    transition: all 200ms ease-in-out;
+    margin-left: 10px;
+    font-size: 15px;
+} 
+
+#search_btn:hover {
+    transform: scale(1.1,1.1);
+}
