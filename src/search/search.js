@@ -6,7 +6,7 @@ const searchSuggestion = function(unit) {
     const searchIn = document.querySelector("#search_in");
     searchIn.addEventListener("input", () =>{
         let sucessfull = false;
-        fetch(`http://api.weatherapi.com/v1/search.json?key=44452755b5a14a59aa3221559241002&q=${searchIn.value}`, {mode: 'cors'})
+        fetch(`https://api.weatherapi.com/v1/search.json?key=44452755b5a14a59aa3221559241002&q=${searchIn.value}`, {mode: 'cors'})
         .then(function(response) {
             if(response.ok){
                 sucessfull = true;
